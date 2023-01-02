@@ -8,6 +8,7 @@ function writeDataToFile(filename, content) {
   });
 }
 
+//body-parser
 function getPostData(req) {
   return new Promise((resolve, reject) => {
     try {
