@@ -69,9 +69,26 @@ const update = async (req, res, id) => {
   }
 };
 
+const deletePosts = async (req, res, id) => {
+  try {
+    const posts = await post.findById(id);
+    if (!posts) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "no post" }));
+    } else {
+      const deleteposts = await post.deletePost(id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ posts, message: "Silme işlemi başrılı" }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getData,
   getPost,
   create,
   update,
+  deletePosts,
 };

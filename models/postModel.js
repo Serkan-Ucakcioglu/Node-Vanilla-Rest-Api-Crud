@@ -32,10 +32,18 @@ const updatePost = (id, post) => {
     resolve(data[index]);
   });
 };
+const deletePost = (id) => {
+  return new Promise((resolve, reject) => {
+    const filtered = data.filter((post) => Number(post.id) !== Number(id));
+    writeDataToFile(path.join(__dirname, "..", "data", "data.json"), filtered);
+    resolve(filtered);
+  });
+};
 
 module.exports = {
   findAllData,
   findById,
   createPost,
   updatePost,
+  deletePost,
 };
