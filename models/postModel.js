@@ -24,8 +24,18 @@ const createPost = (post) => {
   });
 };
 
+const updatePost = (id, post) => {
+  return new Promise((resolve, reject) => {
+    const index = data.findIndex((post) => post.id == id);
+    data[index] = { id, ...post };
+    writeDataToFile(path.join(__dirname, "..", "data", "data.json"), data);
+    resolve(data[index]);
+  });
+};
+
 module.exports = {
   findAllData,
   findById,
   createPost,
+  updatePost,
 };

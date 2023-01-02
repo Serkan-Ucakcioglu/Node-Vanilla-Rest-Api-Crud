@@ -9,6 +9,9 @@ const server = http.createServer((req, res) => {
     post.getPost(req, res, id);
   } else if (req.url === "/add" && req.method === "POST") {
     post.create(req, res);
+  } else if (req.url.match(/\/all\/[0-9]+/) && req.method === "PUT") {
+    const id = req.url.split("/")[2];
+    post.update(req, res, id);
   }
 });
 

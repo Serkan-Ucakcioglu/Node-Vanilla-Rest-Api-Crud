@@ -42,8 +42,36 @@ const create = async (req, res) => {
   }
 };
 
+const update = async (req, res, id) => {
+  try {
+    const posts = await post.findById(id);
+    if (!post) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "no Post !" }));
+    } else {
+      const bodys = await getPostData(req);
+
+      const { name, title, body } = JSON.parse(bodys);
+
+      const product = {
+        name,
+        title,
+        body,
+      };
+
+      const newPost = await post.updatePost(id, product);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(newPost));
+    }
+  } catch (error) {
+    throw new Error("no");
+  }
+};
+
 module.exports = {
   getData,
   getPost,
   create,
+  update,
 };
