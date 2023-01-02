@@ -1,4 +1,5 @@
 const post = require("../models/postModel");
+let { getPostData } = require("../utils/post");
 
 const getData = async (req, res) => {
   try {
@@ -20,7 +21,29 @@ const getPost = async (req, res, id) => {
   }
 };
 
+const create = async (req, res) => {
+  try {
+    const bodys = await getPostData(req);
+
+    const { name, title, body } = JSON.parse(bodys);
+
+    const product = {
+      name,
+      title,
+      body,
+    };
+
+    const newPost = await post.createPost(product);
+
+    res.writeHead(201, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(newPost));
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   getData,
   getPost,
+  create,
 };
